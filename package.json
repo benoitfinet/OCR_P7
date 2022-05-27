@@ -1,0 +1,19 @@
+{
+  "name": "p7",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "sass": "sass --watch ./sass/main.scss:css/style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benoitfinet/OCR_P7.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/benoitfinet/OCR_P7/issues"
+  },
+  "homepage": "https://github.com/benoitfinet/OCR_P7#readme"
+}

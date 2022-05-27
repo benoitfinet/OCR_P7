@@ -1,0 +1,11 @@
+@mixin tablette-only {
+    @media screen and (min-width: map-get($breakpoints, tablette)) {
+      @content;
+    }
+}
+
+@mixin desktop-only {
+    @media screen and (min-width: map-get($breakpoints, desktop)) {
+      @content;
+    }
+}
