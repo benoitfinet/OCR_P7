@@ -1,0 +1,51 @@
+.allCards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.cardContent {
+    width: 28%;
+    height: 500px;
+    margin: 2% 0;
+    background-color: #E7E7E7;
+    border-radius: 5px;
+}
+
+
+.card {
+    &__top {
+        height: 250px;
+        background-color: #C7BEBE;
+        border-radius: 5px 5px 0 0;
+    }
+    &__bottom {
+        &--lineTitle {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 2% 5%;
+        }
+        &--secondPart {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 2% 5%;
+        }
+        &--description {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 8;
+            -webkit-box-orient: vertical;
+            width: 200px;
+        }
+        &--timeBlock {
+            display: flex;
+            flex-direction: row;
+        }
+        &--icon {
+            padding-right: 10px;
+        }
+    }
+}
