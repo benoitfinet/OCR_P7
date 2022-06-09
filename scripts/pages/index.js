@@ -11,12 +11,11 @@ async function getRecipes() {
     })
     
     let recipes = [];
-    
-    
-    data.recipes.forEach((item) => {
-        const recipe = new RecipesFactory(item, "json")
+
+    for (let i = 0; i < data.recipes.length; i++) {
+        const recipe = new RecipesFactory(data.recipes[i], "json")
         recipes.push(recipe)
-    })
+    }
     
     inputSearch.addEventListener("keyup", function() {
         let inputValue = document.getElementById("inputSearch").value;
@@ -31,14 +30,11 @@ async function getRecipes() {
                     return true;
                 }
 
-                let isValid = false
-                recipe.ingredients.forEach((ingredient) => {
-                    if(ingredient.ingredient.includes(inputValue)) {
-                        isValid = true;
+                for (let i = 0; i < recipe.ingredients.length; i++) {
+                    if(recipe.ingredients[i].ingredient.includes(inputValue)) {
+                        return true;
                     }
-                })
-
-                return isValid
+                }
 
             });
 
@@ -58,12 +54,11 @@ async function getRecipes() {
 async function displayRecipes(recipeItems) {
     let nodes = document.querySelector('.allCards');
     
-    recipeItems.forEach((recipe) => {
-        
-        let template = new RecipeCard(recipe)
+    for (let i = 0; i < recipeItems.length; i++) {
+        let template = new RecipeCard(recipeItems[i])
         const userCardDOM = template.createRecipe();
         nodes.append(userCardDOM);
-    });
+    }
 };
 
 function displayNewRecipe(recipeItems) {
