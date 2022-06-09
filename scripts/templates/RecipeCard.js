@@ -9,7 +9,7 @@ export class RecipeCard {
         wrapper.classList.add("cardContent");
         
         
-        const recipe = `
+        let recipe = `
             <article class="card">
                     <div class="card__top"></div>
                     <div class="card__bottom--lineTitle">
@@ -20,12 +20,15 @@ export class RecipeCard {
                         </div>
                     </div>
                     <div class="card__bottom--secondPart">
-                    <div>
-                    ${this.recipe.ingredients.forEach((item) => {
+                    <div>`
+                    this.recipe.ingredients.forEach((item) => {
+                        recipe +=
                         `
                         <p class="card__bottom--ingredients">${item.ingredient}</p>
                         `
-                    })}
+                    })
+                    recipe +=
+                    ` 
                     </div>
                         <p class="card__bottom--description">${this.recipe.description}</p>
                     </div>

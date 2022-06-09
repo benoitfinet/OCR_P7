@@ -12,11 +12,46 @@ async function getRecipes() {
     
     let recipes = [];
     
+    
     data.recipes.forEach((item) => {
         const recipe = new RecipesFactory(item, "json")
         recipes.push(recipe)
     })
+    
+    inputSearch.addEventListener("keyup", function() {
+        let inputValue = document.getElementById("inputSearch").value;
+        if(inputValue.length >= 3) {
+            let newRecipe = recipes.filter(recipe => {
 
+                if (recipe.name.includes(inputValue)) {
+                    return true;
+                }
+
+                if (recipe.description.includes(inputValue)) {
+                    return true;
+                }
+
+                let isValid = false
+                recipe.ingredients.forEach((ingredient) => {
+                    if(ingredient.ingredient.includes(inputValue)) {
+                        isValid = true;
+                    }
+                })
+
+                return isValid
+
+            });
+
+            displayNewRecipe(newRecipe);
+            console.log("OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
+            console.log(newRecipe);
+            console.log(recipes);
+        } else {
+            displayNewRecipe(recipes);
+            console.log("NON");
+        }
+    })
+    console.log(recipes);
     return recipes
 }
     
@@ -31,9 +66,16 @@ async function displayRecipes(recipeItems) {
     });
 };
 
+function displayNewRecipe(recipeItems) {
+    let recipes = document.querySelector(".allCards");
+    recipes.innerHTML = "";
+
+    displayRecipes(recipeItems);
+}
+
 async function init() {
     const recipes = await getRecipes();
-    displayRecipes(recipes);
+    displayNewRecipe(recipes);
 };
 
 init();
