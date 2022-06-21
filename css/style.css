@@ -214,7 +214,7 @@ p {
 .cardContent {
   width: 28%;
   height: 500px;
-  margin: 2% 0;
+  margin: 6% 0;
   background-color: #E7E7E7;
   border-radius: 5px;
 }
@@ -249,6 +249,73 @@ p {
 }
 .card__bottom--icon {
   padding-right: 10px;
+}
+
+.searchWithTags {
+  display: flex;
+  flex-direction: row;
+  padding-top: 25px;
+}
+.searchWithTags__ingredients {
+  background-color: #3282F7;
+  border: #3282F7 25px solid;
+}
+.searchWithTags__devices {
+  background-color: #68D9A4;
+  border: #68D9A4 25px solid;
+  left: 17%;
+}
+.searchWithTags__items {
+  background-color: #ED6454;
+  border: #ED6454 25px solid;
+  left: 30%;
+}
+.searchWithTags__list {
+  color: white;
+}
+.searchWithTags__input {
+  width: 120px;
+}
+.searchWithTags__input::placeholder {
+  color: white;
+}
+.searchWithTags__input:focus {
+  outline: none;
+}
+.searchWithTags__input--ingredients[type=text] {
+  background-color: #3282F7;
+  border: none;
+}
+.searchWithTags__input--devices[type=text] {
+  background-color: #68D9A4;
+  border: none;
+}
+.searchWithTags__input--items[type=text] {
+  background-color: #ED6454;
+  border: none;
+}
+.searchWithTags__wrap {
+  width: fit-content;
+  margin-right: 25px;
+  border-radius: 5px;
+  position: absolute;
+}
+.searchWithTags__button {
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+.searchWithTags__button--ingredients {
+  background-color: #3282F7;
+}
+.searchWithTags__button--devices {
+  background-color: #68D9A4;
+}
+.searchWithTags__button--items {
+  background-color: #ED6454;
 }
 
 .header {
@@ -294,7 +361,7 @@ p {
   color: black;
 }
 
-input[type=text] {
+.searchBar__input[type=text] {
   background-color: #E7E7E7;
 }
 

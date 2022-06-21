@@ -11,12 +11,83 @@ async function getRecipes() {
     })
     
     let recipes = [];
-    
+    let ingredients = [];
+    let appliance = [];
+    let ustensils = [];
     
     data.recipes.forEach((item) => {
         const recipe = new RecipesFactory(item, "json")
         recipes.push(recipe)
+        appliance.push(recipe.appliance)
+        recipe.ingredients.forEach((item) => {
+            ingredients.push(item.ingredient)
+        })
+        recipe.ustensils.forEach((test) => {
+            ustensils.push(test)
+        })
     })
+
+    /**
+     * Retourne les ingrédients sans les doublons
+     */
+    let filterIngredients = ingredients.filter(function(ele , pos){
+        return ingredients.indexOf(ele) == pos;
+    }) 
+
+    let filterUstensils = ustensils.filter(function(ele , pos){
+        return ustensils.indexOf(ele) == pos;
+    })
+
+    let filterAppliance = appliance.filter(function(ele , pos){
+        return appliance.indexOf(ele) == pos;
+    })
+    console.log(filterAppliance)
+
+    openIngredients.addEventListener("click", function() {
+        let close = false
+        const list = document.getElementById('ingredientsList')
+        if(close = false) {
+            openIngredients.style.transform = "rotate(180deg)"
+            list.innerHTML = filterIngredients.join("</br>")
+            close = true
+            console.log(close)
+        } else if (close = true) {
+            openIngredients.style.transform = "rotate(180deg)"
+            list.innerHTML = ""
+            close = false
+        }
+    })
+
+    openDevices.addEventListener("click", function() {
+        let close = false
+        const list = document.getElementById('deviceList')
+        if(close === false) {
+            openDevices.style.transform = "rotate(180deg)"
+            list.innerHTML = filterUstensils.join("</br>")
+            close = true
+            console.log(close)
+        } else if (close === true) {
+            openDevices.style.transform = "rotate(180deg)"
+            list.innerHTML = ""
+            close = false
+        }
+    })
+
+    let close = false
+    openItems.addEventListener("click", function() {
+        const list = document.getElementById('itemList')
+        if(close === false) {
+            openItems.style.transform = "rotate(180deg)"
+            list.innerHTML = filterAppliance.join("</br>")
+            close = true
+            console.log(close)
+        } else if (close === true) {
+            openItems.style.transform = "rotate(180deg)"
+            list.innerHTML = ""
+            close = false
+        }
+    })
+
     
     inputSearch.addEventListener("keyup", function() {
         let inputValue = document.getElementById("inputSearch").value;
@@ -43,15 +114,10 @@ async function getRecipes() {
             });
 
             displayNewRecipe(newRecipe);
-            console.log("OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
-            console.log(newRecipe);
-            console.log(recipes);
         } else {
             displayNewRecipe(recipes);
-            console.log("NON");
         }
     })
-    console.log(recipes);
     return recipes
 }
     

@@ -1,0 +1,69 @@
+.searchWithTags {
+    display: flex;
+    flex-direction: row;
+    padding-top: 25px;
+    &__ingredients {
+        background-color: #3282F7;
+        border: #3282F7 25px solid;
+    }
+    &__devices {
+        background-color: #68D9A4;
+        border: #68D9A4 25px solid;
+        left: 17%;
+    }
+    &__items {
+        background-color: #ED6454;
+        border: #ED6454 25px solid;
+        left: 30%;
+    }
+    &__list {
+        color: white;
+    }
+
+    &__input{
+        width: 120px;
+        &::placeholder {
+            color: white;
+        }
+        &:focus {
+            outline: none;
+        }
+        &--ingredients[type="text"] {
+            background-color : #3282F7;
+            border: none;
+        }
+        &--devices[type="text"] {
+            background-color : #68D9A4;
+            border: none;
+        }
+        &--items[type="text"] {
+            background-color : #ED6454;
+            border: none;
+        }
+    }
+
+    &__wrap{
+        width: fit-content;
+        margin-right: 25px;
+        border-radius: 5px;
+        position: absolute;
+    }
+
+    &__button {
+        border: none;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        &--ingredients {
+            background-color: #3282F7;
+        }
+        &--devices {
+            background-color : #68D9A4;
+        }
+        &--items {
+            background-color : #ED6454;
+        }
+    }
+}

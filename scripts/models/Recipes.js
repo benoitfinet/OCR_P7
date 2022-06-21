@@ -7,7 +7,7 @@ export class Recipes {
         this._time = recipe.time
         this._description = recipe.description
         this._appliance = recipe.appliance
-        this._utensils = recipe.utensils
+        this._ustensils = recipe.ustensils
     }
 
     get name() {
@@ -38,7 +38,7 @@ export class Recipes {
         return this._appliance
     }
 
-    get utensils() {
-        return this._utensils
+    get ustensils() {
+        return this._ustensils
     }
 }
