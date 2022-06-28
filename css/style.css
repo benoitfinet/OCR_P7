@@ -273,6 +273,9 @@ p {
 .searchWithTags__list {
   color: white;
 }
+.searchWithTags .brtest {
+  padding-top: 5px;
+}
 .searchWithTags__input {
   width: 120px;
 }
@@ -316,6 +319,18 @@ p {
 }
 .searchWithTags__button--items {
   background-color: #ED6454;
+}
+
+#ingredientsList {
+  display: none;
+}
+
+#deviceList {
+  display: none;
+}
+
+#itemList {
+  display: none;
 }
 
 .header {

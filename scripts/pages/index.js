@@ -1,6 +1,11 @@
 import { RecipesFactory } from "../factories/RecipesFactory.js";
 import { RecipeCard } from "../templates/RecipeCard.js";
 
+const tags = document.getElementById('tags');
+const listIngredients = document.getElementById('ingredientsList');
+const listDevices = document.getElementById('deviceList');
+const listItems = document.getElementById('itemList');
+
 async function getRecipes() {
     let data = await fetch('/data/recipes.json')
     .then(response => {
@@ -27,67 +32,105 @@ async function getRecipes() {
         })
     })
 
-    /**
-     * Retourne les ingrédients sans les doublons
-     */
     let filterIngredients = ingredients.filter(function(ele , pos){
         return ingredients.indexOf(ele) == pos;
-    }) 
+    })
+    
+    setIngredients(filterIngredients)
 
-    let filterUstensils = ustensils.filter(function(ele , pos){
+    inputIngredients.addEventListener("keyup", function() {
+        let inputValue = document.getElementById("inputIngredients").value;
+        if(inputValue.length > 0) {
+            let newIngredientsList = filterIngredients.filter(ingredient => {
+                if (ingredient.includes(inputValue)) {
+                    return true;
+                }
+            });
+            setIngredients(newIngredientsList)
+        } else {
+            setIngredients(filterIngredients)
+        }
+    })
+
+    let filterDevices = ustensils.filter(function(ele , pos){
         return ustensils.indexOf(ele) == pos;
+    })
+
+    setDevices(filterDevices)
+
+    inputDevices.addEventListener("keyup", function() {
+        let inputValue = document.getElementById("inputDevices").value;
+        if(inputValue.length > 0) {
+            let newDevicesList = filterDevices.filter(device => {
+                if (device.includes(inputValue)) {
+                    return true;
+                }
+            });
+            setDevices(newDevicesList)
+        } else {
+            setDevices(filterDevices)
+        }
     })
 
     let filterAppliance = appliance.filter(function(ele , pos){
         return appliance.indexOf(ele) == pos;
     })
-    console.log(filterAppliance)
 
+    setAppliance(filterAppliance)
+
+    inputItems.addEventListener("keyup", function() {
+        let inputValue = document.getElementById("inputItems").value;
+        if(inputValue.length > 0) {
+            let newApplianceList = filterAppliance.filter(device => {
+                if (device.includes(inputValue)) {
+                    return true;
+                }
+            });
+            setAppliance(newApplianceList)
+        } else {
+            setAppliance(filterAppliance)
+        }
+    })
+
+    let closeIngredients = false
     openIngredients.addEventListener("click", function() {
-        let close = false
-        const list = document.getElementById('ingredientsList')
-        if(close = false) {
+        if(closeIngredients === false) {
             openIngredients.style.transform = "rotate(180deg)"
-            list.innerHTML = filterIngredients.join("</br>")
-            close = true
-            console.log(close)
-        } else if (close = true) {
-            openIngredients.style.transform = "rotate(180deg)"
-            list.innerHTML = ""
-            close = false
+            closeIngredients = true
+            listIngredients.style.display = "block"
+        } else if (closeIngredients === true) {
+            openIngredients.style.transform = "rotate(0deg)"
+            closeIngredients = false
+            listIngredients.style.display = "none"
         }
     })
 
+    let closeDevices = false
     openDevices.addEventListener("click", function() {
-        let close = false
-        const list = document.getElementById('deviceList')
-        if(close === false) {
+        if(closeDevices === false) {
             openDevices.style.transform = "rotate(180deg)"
-            list.innerHTML = filterUstensils.join("</br>")
-            close = true
-            console.log(close)
-        } else if (close === true) {
-            openDevices.style.transform = "rotate(180deg)"
-            list.innerHTML = ""
-            close = false
+            listDevices.style.display = "block"
+            closeDevices = true
+        } else if (closeDevices === true) {
+            openDevices.style.transform = "rotate(0deg)"
+            listDevices.style.display = "none"
+            closeDevices = false
         }
     })
 
-    let close = false
+    let closeItems = false
     openItems.addEventListener("click", function() {
-        const list = document.getElementById('itemList')
-        if(close === false) {
+        
+        if(closeItems === false) {
             openItems.style.transform = "rotate(180deg)"
-            list.innerHTML = filterAppliance.join("</br>")
-            close = true
-            console.log(close)
-        } else if (close === true) {
-            openItems.style.transform = "rotate(180deg)"
-            list.innerHTML = ""
-            close = false
+            listItems.style.display = "block"
+            closeItems = true
+        } else if (closeItems === true) {
+            openItems.style.transform = "rotate(0deg)"
+            listItems.style.display = "none"
+            closeItems = false
         }
     })
-
     
     inputSearch.addEventListener("keyup", function() {
         let inputValue = document.getElementById("inputSearch").value;
@@ -102,9 +145,16 @@ async function getRecipes() {
                     return true;
                 }
 
+                if (recipe.description.includes(tags.value) || recipe.name.includes(tags.value)) {
+                    return true;
+                }
+
                 let isValid = false
                 recipe.ingredients.forEach((ingredient) => {
                     if(ingredient.ingredient.includes(inputValue)) {
+                        isValid = true;
+                    }
+                    if(ingredient.ingredient.includes(tags.value)) {
                         isValid = true;
                     }
                 })
@@ -138,6 +188,51 @@ function displayNewRecipe(recipeItems) {
 
     displayRecipes(recipeItems);
 }
+
+function setIngredients(filter) {
+
+    listIngredients.innerHTML = "";
+    filter.forEach((item) => {
+        let p = document.createElement("p")
+        p.onclick = function() {
+            let bal = document.createElement("p")
+            bal.textContent = p.innerHTML
+            bal.classList.add("ingredientTag");
+            tags.append(bal) };
+        p.textContent = item
+        listIngredients.append(p)
+    });
+};
+
+function setDevices(filter) {
+
+    listDevices.innerHTML = "";
+    filter.forEach((item) => {
+        let p = document.createElement("p")
+        p.onclick = function() {
+            let bal = document.createElement("p")
+            bal.textContent = p.innerHTML
+            bal.classList.add("deviceTag");
+            tags.append(bal) };
+        p.textContent = item
+        listDevices.append(p)
+    });
+};
+
+function setAppliance(filter) {
+
+    listItems.innerHTML = "";
+    filter.forEach((item) => {
+        let p = document.createElement("p")
+        p.onclick = function() {
+            let bal = document.createElement("p")
+            bal.textContent = p.innerHTML
+            bal.classList.add("applianceTag");
+            tags.append(bal) };
+        p.textContent = item
+        listItems.append(p)
+    });
+};
 
 async function init() {
     const recipes = await getRecipes();
