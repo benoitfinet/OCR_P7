@@ -192,6 +192,10 @@ $delay-loader : 2000ms;
 
 $font-primary: "roboto";
 $font-secondary: "Shrikhand", cursive;*/
+* {
+  font-family: "Lato";
+}
+
 body {
   margin: 0 4%;
 }
@@ -234,7 +238,7 @@ p {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 2% 5%;
+  padding: 5% 5%;
 }
 .card__bottom--description {
   overflow: hidden;
@@ -242,6 +246,8 @@ p {
   -webkit-line-clamp: 8;
   -webkit-box-orient: vertical;
   width: 200px;
+  font-weight: 400;
+  font-size: 12px;
 }
 .card__bottom--timeBlock {
   display: flex;
@@ -249,6 +255,18 @@ p {
 }
 .card__bottom--icon {
   padding-right: 10px;
+}
+.card__bottom__ingredients {
+  font-weight: 500;
+  font-size: 12px;
+}
+.card__bottom--time {
+  font-weight: 700;
+  font-size: 18px;
+}
+.card__bottom--title {
+  font-weight: 400;
+  font-size: 18px;
 }
 
 .searchWithTags {
@@ -272,6 +290,17 @@ p {
 }
 .searchWithTags__list {
   color: white;
+  -webkit-columns: 3;
+  -moz-columns: 3;
+  columns: 3;
+  max-height: 500px;
+  height: max-content;
+  padding-top: 2em;
+}
+.searchWithTags__list p {
+  padding: 0.3em;
+  font-weight: 400;
+  font-size: 18px;
 }
 .searchWithTags .brtest {
   padding-top: 5px;
@@ -281,6 +310,8 @@ p {
 }
 .searchWithTags__input::placeholder {
   color: white;
+  font-weight: 700;
+  font-size: 18px;
 }
 .searchWithTags__input:focus {
   outline: none;
@@ -323,6 +354,7 @@ p {
 
 #ingredientsList {
   display: none;
+  overflow-x: scroll;
 }
 
 #deviceList {
@@ -331,6 +363,41 @@ p {
 
 #itemList {
   display: none;
+}
+
+#tags {
+  display: flex;
+  flex-direction: row;
+  margin-top: 2em;
+  padding-right: 2em;
+}
+
+.deviceTag {
+  background-color: #68D9A4;
+  padding: 1em 2em;
+  color: white;
+  border-radius: 5px;
+  margin-right: 2em;
+}
+
+.closeTag {
+  margin-left: 1em;
+}
+
+.applianceTag {
+  background-color: #ED6454;
+  padding: 1em 2em;
+  color: white;
+  border-radius: 5px;
+  margin-right: 2em;
+}
+
+.ingredientTag {
+  background-color: #3282F7;
+  padding: 1em 2em;
+  color: white;
+  border-radius: 5px;
+  margin-right: 2em;
 }
 
 .header {

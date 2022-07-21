@@ -18,6 +18,18 @@
     }
     &__list {
         color: white;
+        -webkit-columns: 3;
+        -moz-columns: 3;
+        columns: 3;
+        max-height: 500px;
+        height: max-content;
+        padding-top: 2em;
+    }
+
+    &__list p {
+        padding: 0.3em;
+        font-weight: 400;
+        font-size: 18px;
     }
 
     .brtest {
@@ -28,6 +40,8 @@
         width: 120px;
         &::placeholder {
             color: white;
+            font-weight: 700;
+            font-size: 18px;
         }
         &:focus {
             outline: none;
@@ -74,6 +88,7 @@
 
 #ingredientsList {
     display: none;
+    overflow-x: scroll;
 }
 
 #deviceList {
@@ -82,4 +97,39 @@
 
 #itemList {
     display: none;
+}
+
+#tags {
+    display: flex;
+    flex-direction: row;
+    margin-top: 2em;
+    padding-right: 2em;
+}
+
+.deviceTag {
+    background-color : #68D9A4;
+    padding: 1em 2em;
+    color: white;
+    border-radius: 5px;
+    margin-right: 2em;
+}
+
+.closeTag {
+    margin-left: 1em;
+}
+
+.applianceTag {
+    background-color : #ED6454;
+    padding: 1em 2em;
+    color: white;
+    border-radius: 5px;
+    margin-right: 2em;
+}
+
+.ingredientTag {
+    background-color : #3282F7;
+    padding: 1em 2em;
+    color: white;
+    border-radius: 5px;
+    margin-right: 2em;
 }

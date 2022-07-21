@@ -24,7 +24,7 @@ export class RecipeCard {
                     this.recipe.ingredients.forEach((item) => {
                         recipe +=
                         `
-                        <p class="card__bottom--ingredients">${item.ingredient}</p>
+                        <p class="card__bottom--ingredients">${item.ingredient}${item.quantity ? ` : ${item.quantity}` : ""}${item.unit ? ` ${item.unit}` : ""}</p>
                         `
                     })
                     recipe +=
