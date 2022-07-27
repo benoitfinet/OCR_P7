@@ -170,13 +170,13 @@ async function getRecipes() {
         let newRecipe = sortAll(recipes)
         displayNewRecipe(newRecipe)
     })
-
-    deviceList.addEventListener("click", function() {
+    
+    ingredientsList.addEventListener("click", function() {
         let newRecipe = sortAll(recipes)
         displayNewRecipe(newRecipe)
     })
 
-    ingredientsList.addEventListener("click", function() {
+    deviceList.addEventListener("click", function() {
         let newRecipe = sortAll(recipes)
         displayNewRecipe(newRecipe)
     })
