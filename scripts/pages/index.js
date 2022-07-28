@@ -167,23 +167,19 @@ async function getRecipes() {
  */
 
     inputSearch.addEventListener("keyup", function() {
-        let newRecipe = sortAll(recipes)
-        displayNewRecipe(newRecipe)
+        test(recipes)
     })
     
     ingredientsList.addEventListener("click", function() {
-        let newRecipe = sortAll(recipes)
-        displayNewRecipe(newRecipe)
+        test(recipes)
     })
 
     deviceList.addEventListener("click", function() {
-        let newRecipe = sortAll(recipes)
-        displayNewRecipe(newRecipe)
+        test(recipes)
     })
 
     itemList.addEventListener("click", function() {
-        let newRecipe = sortAll(recipes)
-        displayNewRecipe(newRecipe)
+        test(recipes)
     })
 
     return recipes
@@ -240,12 +236,17 @@ function sortInput(recipes) {
  */
 
 function sortIngredients(newRecipes) {
+
+    if(listOfTagsIngredients.length <= 0) {
+        return newRecipes
+    }
+
     let newRecipe = newRecipes.filter(recipe => {
-        let isValid = true
+        let isValid = false
         listOfTagsIngredients.forEach(tag => {
             recipe.ingredients.forEach(ingredient => {
-                if(!ingredient.ingredient.includes(tag)) {
-                    isValid = false;
+                if(ingredient.ingredient.includes(tag)) {
+                    isValid = true;
                 }
             })
         })
@@ -259,11 +260,15 @@ function sortIngredients(newRecipes) {
  */
 
 function sortUstensils(newRecipes) {
+
+    if(listOfTagsDevices.length <= 0) {
+        return newRecipes
+    }
     let newRecipe = newRecipes.filter(recipe => {
-        let isValid = true
+        let isValid = false
         listOfTagsDevices.forEach(tag => {
-            if(!recipe.ustensils.includes(tag)) {
-                isValid = false;
+            if(recipe.ustensils.includes(tag)) {
+                isValid = true;
             }
         })
         return isValid
@@ -276,11 +281,15 @@ function sortUstensils(newRecipes) {
  */
 
 function sortAppliance(newRecipes) {
+
+    if(listOfTagsItems.length <= 0) {
+        return newRecipes
+    }
     let newRecipe = newRecipes.filter(recipe => {
-        let isValid = true
+        let isValid = false
         listOfTagsItems.forEach(tag => {
-            if(!recipe.appliance.includes(tag)) {
-                isValid = false;
+            if(recipe.appliance.includes(tag)) {
+                isValid = true;
             }
         })
         return isValid
@@ -289,37 +298,10 @@ function sortAppliance(newRecipes) {
 }
 
 /**
- * Affichage de toutes les recettes
- */
-    
-async function displayRecipes(recipeItems) {
-    let nodes = document.querySelector('.allCards');
-    
-    recipeItems.forEach((recipe) => {
-        
-        let template = new RecipeCard(recipe)
-        const userCardDOM = template.createRecipe();
-        nodes.append(userCardDOM);
-    });
-};
-
-/**
- * Affichage des recettes fitrées
- */
-
-function displayNewRecipe(recipeItems) {
-    let recipes = document.querySelector(".allCards");
-    recipes.innerHTML = "";
-
-    displayRecipes(recipeItems);
-}
-
-/**
  * Selection et création des tags Ingrédients
  */
 
 function setIngredients(filter) {
-
     listIngredients.innerHTML = "";
 
     filter.forEach((item) => {
@@ -330,16 +312,29 @@ function setIngredients(filter) {
             bal.classList.add("ingredientTag");
             tags.append(bal)
             listOfTagsIngredients.push(p.innerHTML)
-            let icon = document.createElement("i")
-            icon.classList.add("fa-regular", "fa-circle-xmark","fa-xl", "closeTag");
-            icon.onclick = function() {
-                bal.style.display = "none"
-            }
-            bal.append(icon)};
+            createEventListener()
+            bal.append(createEventListener(bal))};
         p.textContent = item
         listIngredients.append(p)
     });
 };
+
+function createEventListener(tag) {
+    let icon = document.createElement('i');
+    icon.classList.add("fa-regular", "fa-circle-xmark","fa-xl", "closeTag");
+    if (icon) {
+        icon.addEventListener('click', function() {
+            tag.style.display = "none";
+            test()
+        });
+    }
+    return icon
+}
+
+function test(recipes) {
+    let newRecipe = sortAll(recipes)
+    displayNewRecipe(newRecipe)
+}
 
 /**
  * Selection et création des tags Appareils
@@ -394,6 +389,32 @@ function setAppliance(filter) {
         listItems.append(p)
     });
 };
+
+/**
+ * Affichage de toutes les recettes
+ */
+    
+ async function displayRecipes(recipeItems) {
+    let nodes = document.querySelector('.allCards');
+    
+    recipeItems.forEach((recipe) => {
+        
+        let template = new RecipeCard(recipe)
+        const userCardDOM = template.createRecipe();
+        nodes.append(userCardDOM);
+    });
+};
+
+/**
+ * Affichage des recettes fitrées
+ */
+
+function displayNewRecipe(recipeItems) {
+    let recipes = document.querySelector(".allCards");
+    recipes.innerHTML = "";
+
+    displayRecipes(recipeItems);
+}
 
 async function init() {
     const recipes = await getRecipes();
