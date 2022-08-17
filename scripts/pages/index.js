@@ -26,7 +26,7 @@ async function getRecipes() {
 /**
  * Push des différents éléments dans des tableaux uniques
  */
-    
+
     data.recipes.forEach((item) => {
         const recipe = new RecipesFactory(item, "json")
         recipes.push(recipe)
@@ -162,9 +162,8 @@ async function getRecipes() {
         }
     })
 
-/**
- * Events au clic : nouvel affichage en fonction des choix
- */
+ // Events au clic : nouvel affichage en fonction des choix
+
 
     inputSearch.addEventListener("keyup", function() {
         test(recipes)
@@ -312,8 +311,9 @@ function setIngredients(filter) {
             bal.classList.add("ingredientTag");
             tags.append(bal)
             listOfTagsIngredients.push(p.innerHTML)
-            createEventListener()
-            bal.append(createEventListener(bal))};
+            let tag = createEventListener(bal)
+            bal.append(tag)
+        };
         p.textContent = item
         listIngredients.append(p)
     });
@@ -325,7 +325,8 @@ function createEventListener(tag) {
     if (icon) {
         icon.addEventListener('click', function() {
             tag.style.display = "none";
-            test()
+            getRecipes();
+            console.log("testSuppression")
         });
     }
     return icon
