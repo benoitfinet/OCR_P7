@@ -1,58 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="icon" type="image/png" href="assets/favicon.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Les petits plats</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Les petits plats</title>
 </head>
+
 <body>
-    <header class="header">
-        <img class="header__logo" src="/data/Logo P7.PNG">
-    </header>
-    <section>
-        <div class="searchBar__wrap">
-            <div class="searchBar">
-               <input type="text" id="inputSearch" class="searchBar__input" placeholder="Rechercher une recette">
-               <button type="submit" class="searchBar__button">
-                 <i class="fa fa-search searchBar__icon"></i>
-              </button>
-            </div>
-         </div>
-    </section>
-    <section id="tags">
-
-    </section>
-    <section class="searchWithTags">
-        <div class="searchWithTags__wrap searchWithTags__ingredients" id="searchByIngredients">
-               <input type="text" id="inputIngredients" class="searchWithTags__input searchWithTags__input--ingredients" placeholder="Ingredients">
-               <button class="searchWithTags__button searchWithTags__button--ingredients" id="openIngredients">
-                 <i class="fa fa-chevron-down"></i>
-              </button>
-              <div class="searchWithTags__list" id="ingredientsList"></div>
-         </div>
-         <div class="searchWithTags__wrap searchWithTags__devices" id="searchByDevices">
-            <input type="text" id="inputDevices" class="searchWithTags__input searchWithTags__input--devices" placeholder="Appareils">
-            <button class="searchWithTags__button searchWithTags__button--devices" id="openDevices">
-              <i class="fa fa-chevron-down"></i>
-           </button>
-           <div class="searchWithTags__list" id="deviceList"></div>
+  <header class="header">
+    <img class="header__logo" src="/data/Logo P7.PNG">
+  </header>
+  <section>
+    <div class="searchBar__wrap">
+      <div class="searchBar">
+        <input type="text" id="inputSearch" class="searchBar__input" placeholder="Rechercher une recette">
+        <button type="submit" class="searchBar__button">
+          <i class="fa fa-search searchBar__icon"></i>
+        </button>
       </div>
-      <div class="searchWithTags__wrap searchWithTags__items" id="searchByItems">
-        <input type="text" id="inputItems" class="searchWithTags__input searchWithTags__input--items" placeholder="Ustensiles">
-        <button class="searchWithTags__button searchWithTags__button--items" id="openItems">
-          <i class="fa fa-chevron-down"></i>
-       </button>
-       <div class="searchWithTags__list" id="itemList"></div>
-  </div>
-    </section>
-    <section class="allCards">
+    </div>
+  </section>
+  <section id="tags">
 
-    </section>
-    <script type="module" src="scripts/pages/index.js"></script>
+  </section>
+  <section class="searchWithTags">
+    <div class="searchWithTags__wrap searchWithTags__ingredients" id="searchByIngredients">
+      <input type="text" id="inputIngredients" class="searchWithTags__input searchWithTags__input--ingredients"
+        placeholder="Ingredients">
+      <button class="searchWithTags__button searchWithTags__button--ingredients" id="openIngredients">
+        <i class="fa fa-chevron-down"></i>
+      </button>
+      <div class="searchWithTags__list" id="ingredientsList"></div>
+    </div>
+    <div class="searchWithTags__wrap searchWithTags__devices" id="searchByDevices">
+      <input type="text" id="inputDevices" class="searchWithTags__input searchWithTags__input--devices"
+        placeholder="Appareils">
+      <button class="searchWithTags__button searchWithTags__button--devices" id="openDevices">
+        <i class="fa fa-chevron-down"></i>
+      </button>
+      <div class="searchWithTags__list" id="deviceList"></div>
+    </div>
+    <div class="searchWithTags__wrap searchWithTags__items" id="searchByItems">
+      <input type="text" id="inputItems" class="searchWithTags__input searchWithTags__input--items"
+        placeholder="Ustensiles">
+      <button class="searchWithTags__button searchWithTags__button--items" id="openItems">
+        <i class="fa fa-chevron-down"></i>
+      </button>
+      <div class="searchWithTags__list" id="itemList"></div>
+    </div>
+  </section>
+  <section class="allCards">
+
+  </section>
+  <script type="module" src="scripts/pages/test.js"></script>
 </body>
+
 </html>
