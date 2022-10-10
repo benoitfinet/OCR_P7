@@ -1,124 +1,249 @@
-import { RecipesFactory } from "../factories/RecipesFactory.js";
-import { RecipeCard } from "../templates/RecipeCard.js";
+import {RecipesFactory} from "../factories/RecipesFactory.js";
+import {RecipeCard} from "../templates/RecipeCard.js";
 
 const tags = document.getElementById('tags');
 const listIngredients = document.getElementById('ingredientsList');
 const listDevices = document.getElementById('deviceList');
 const listItems = document.getElementById('itemList');
+const recipesDOM = document.querySelector('.allCards');
+
 let listOfTagsIngredients = [];
 let listOfTagsDevices = [];
 let listOfTagsItems = [];
 
+// let ingredients = [];
+// let appliance = [];
+// let ustensils = [];
+
+
+/**
+ *
+ */
 async function getRecipes() {
-    let data = await fetch('/data/recipes.json')
-    .then(response => {
-        return response.json()
-    })
-    .catch(error => {
-        console.log(error)
-    })
-    
-    let recipes = [];
+
+    // Récupère la liste des recettes
+   return await fetch('/data/recipes.json')
+        .then(response => {
+            return response.json()
+        })
+        .then(response => {
+            let results = []
+            response.recipes.map(item => {
+                let recipe = new RecipesFactory(item, 'json')
+                results.push(recipe)
+
+                // appliance.push(recipe.appliance)
+                //
+                // recipe.ingredients.forEach((item) => {
+                //     ingredients.push(item.ingredient)
+                // })
+                //
+                // recipe.ustensils.forEach((item2) => {
+                //     ustensils.push(item2)
+                // })
+            })
+
+            return results
+        })
+}
+
+/**
+ * EventListener sur la recherche par input et tags
+ */
+
+inputSearch.addEventListener("keyup", async function () {
+    let recipes = await getRecipes()
+    let sortedRecipes = sortRecipes(recipes)
+    myTagsListInit(sortedRecipes)
+    updateRecipesDisplay(sortedRecipes)
+})
+
+ingredientsList.addEventListener("click", async function () {
+    let recipes = await getRecipes()
+    let sortedRecipes = sortRecipes(recipes)
+    myTagsListInit(sortedRecipes)
+    updateRecipesDisplay(sortedRecipes)
+})
+
+deviceList.addEventListener("click", async function () {
+    let recipes = await getRecipes()
+    let sortedRecipes = sortRecipes(recipes)
+    myTagsListInit(sortedRecipes)
+    updateRecipesDisplay(sortedRecipes)
+})
+
+itemList.addEventListener("click", async function () {
+    let recipes = await getRecipes()
+    let sortedRecipes = sortRecipes(recipes)
+    myTagsListInit(sortedRecipes)
+    updateRecipesDisplay(sortedRecipes)
+})
+
+/*
+ * Définitions des listes de tags
+ */
+
+function myTagsListInit(recipes){
+
     let ingredients = [];
     let appliance = [];
     let ustensils = [];
 
-/**
- * Push des différents éléments dans des tableaux uniques
- */
+    recipes.map(recipe => {
 
-    data.recipes.forEach((item) => {
-        const recipe = new RecipesFactory(item, "json")
-        recipes.push(recipe)
         appliance.push(recipe.appliance)
+
         recipe.ingredients.forEach((item) => {
             ingredients.push(item.ingredient)
         })
+
         recipe.ustensils.forEach((item2) => {
             ustensils.push(item2)
         })
     })
 
-/**
- * Ici on retire tout les éléments en double et on met en place la recherche par input
- */
 
-    let filterIngredients = ingredients.filter(function(ele , pos){
-        return ingredients.indexOf(ele) == pos;
+    itemsSearch(inputIngredients, ingredients, setIngredientsTagsList)
+    itemsSearch(inputDevices, ustensils, setDevicesTagsList)
+    itemsSearch(inputItems, appliance, setApplianceTagsList)
+
+    // Modification du style des tags
+    tagStyle()
+}
+
+/**
+ * Retirer les éléments en doubles et mise en place de la recherche par item
+ */
+function itemsSearch(id, array, setFunction) {
+
+    let filteredArray = array.filter(function (ele, pos) {
+        return array.indexOf(ele) == pos;
     })
 
-    inputIngredients.addEventListener("keyup", function() {
-        let inputValue = document.getElementById("inputIngredients").value;
-        if(inputValue.length > 0) {
-            let newIngredientsList = filterIngredients.filter(ingredient => {
-                if (ingredient.includes(inputValue)) {
+    id.addEventListener("keyup", function () {
+        if (`${id.value}`.length > 0) {
+            let newList = filteredArray.filter(item => {
+                if (item.includes(`${id.value}`)) {
                     return true;
                 }
             });
-            setIngredients(newIngredientsList)
-            console.log(newIngredientsList)
+            setFunction(newList)
         } else {
-            setIngredients(filterIngredients)
+            setFunction(filteredArray)
         }
     })
 
-    setIngredients(filterIngredients)
+    setFunction(filteredArray)
+}
 
 /**
- * Ici on retire tout les éléments en double et on met en place la recherche par input
+ * Selection et création des tags Ingrédients
  */
+function setIngredientsTagsList(filter) {
+    listIngredients.innerHTML = "";
 
-    let filterDevices = ustensils.filter(function(ele , pos){
-        return ustensils.indexOf(ele) == pos;
-    })
-
-    inputDevices.addEventListener("keyup", function() {
-        let inputValue = document.getElementById("inputDevices").value;
-        if(inputValue.length > 0) {
-            let newDevicesList = filterDevices.filter(device => {
-                if (device.includes(inputValue)) {
-                    return true;
-                }
-            });
-            setDevices(newDevicesList)
-        } else {
-            setDevices(filterDevices)
-        }
-    })
-
-    setDevices(filterDevices)
+    filter.forEach((item) => {
+        let p = document.createElement("p")
+        p.onclick = function () {
+            let bal = document.createElement("p")
+            bal.textContent = p.innerHTML
+            bal.classList.add("ingredientTag");
+            tags.append(bal)
+            listOfTagsIngredients.push(p.innerHTML)
+            let tag = createEventListener(bal, listOfTagsIngredients, 'listOfTagsIngredients')
+            bal.append(tag)
+        };
+        p.textContent = item
+        listIngredients.append(p)
+    });
+};
 
 /**
- * Ici on retire tout les éléments en double et on met en place la recherche par input
+ * Selection et création des tags Appareils
  */
+function setDevicesTagsList(filter) {
 
-    let filterAppliance = appliance.filter(function(ele , pos){
-        return appliance.indexOf(ele) == pos;
-    })
+    listDevices.innerHTML = "";
 
-    inputItems.addEventListener("keyup", function() {
-        let inputValue = document.getElementById("inputItems").value;
-        if(inputValue.length > 0) {
-            let newApplianceList = filterAppliance.filter(device => {
-                if (device.includes(inputValue)) {
-                    return true;
-                }
-            });
-            setAppliance(newApplianceList)
-        } else {
-            setAppliance(filterAppliance)
-        }
-    })
-
-    setAppliance(filterAppliance)
+    filter.forEach((item) => {
+        let p = document.createElement("p")
+        p.onclick = function () {
+            let bal = document.createElement("p")
+            bal.textContent = p.innerHTML
+            bal.classList.add("deviceTag");
+            tags.append(bal)
+            listOfTagsDevices.push(p.innerHTML)
+            let tag = createEventListener(bal, listOfTagsDevices, 'listOfTagsDevices')
+            bal.append(tag)
+        };
+        p.textContent = item
+        listDevices.append(p)
+    });
+};
 
 /**
- * Affichage et css
+ * Selection et création des tags Ustensiles
  */
+function setApplianceTagsList(filter) {
+
+    listItems.innerHTML = "";
+
+    filter.forEach((item) => {
+        let p = document.createElement("p")
+        p.onclick = function () {
+            let bal = document.createElement("p")
+            bal.textContent = p.innerHTML
+            bal.classList.add("applianceTag");
+            tags.append(bal)
+            listOfTagsItems.push(p.innerHTML)
+            let tag = createEventListener(bal, listOfTagsItems, 'listOfTagsItems')
+            bal.append(tag)
+        };
+        p.textContent = item
+        listItems.append(p)
+    });
+};
+
+/**
+ * event pour l'ajout de la croix et effacer le tag (sans l'event pour reload les recettes)
+ */
+function createEventListener(tag, list, type) {
+    let icon = document.createElement('i');
+    icon.classList.add("fa-regular", "fa-circle-xmark", "fa-xl", "closeTag");
+    icon.setAttribute('id', "tagNumber" + list.length)
+
+    if (icon) {
+        icon.addEventListener('click', async function () {
+            tag.style.display = "none";
+
+            switch(type){
+                case 'listOfTagsIngredients':
+                    listOfTagsIngredients = list.filter(test => test !== tag.textContent)
+                    break;
+                case 'listOfTagsDevices':
+                    listOfTagsDevices = list.filter(test => test !== tag.textContent)
+                    break;
+                case 'listOfTagsItems':
+                    listOfTagsItems = list.filter(test => test !== tag.textContent)
+                    break;
+            }
+
+            const recipes = await getRecipes()
+            let sortedRecipes = sortRecipes(recipes)
+            updateRecipesDisplay(sortedRecipes)
+        });
+    }
+    return icon
+}
+
+/**
+ * Affichage et CSS des tags
+ */
+function tagStyle() {
 
     let closeIngredients = false
-    searchByIngredients.addEventListener("click", function() {
-        if(closeIngredients === false) {
+    searchByIngredients.addEventListener("click", function () {
+        if (closeIngredients === false) {
             openIngredients.style.transform = "rotate(180deg)"
             closeIngredients = true
             listIngredients.style.display = "block"
@@ -134,8 +259,8 @@ async function getRecipes() {
     })
 
     let closeDevices = false
-    searchByDevices.addEventListener("click", function() {
-        if(closeDevices === false) {
+    searchByDevices.addEventListener("click", function () {
+        if (closeDevices === false) {
             openDevices.style.transform = "rotate(180deg)"
             listDevices.style.display = "block"
             closeDevices = true
@@ -149,9 +274,9 @@ async function getRecipes() {
     })
 
     let closeItems = false
-    searchByItems.addEventListener("click", function() {
-        
-        if(closeItems === false) {
+    searchByItems.addEventListener("click", function () {
+
+        if (closeItems === false) {
             openItems.style.transform = "rotate(180deg)"
             listItems.style.display = "block"
             closeItems = true
@@ -161,52 +286,37 @@ async function getRecipes() {
             closeItems = false
         }
     })
-
- // Events au clic : nouvel affichage en fonction des choix
-
-
-    inputSearch.addEventListener("keyup", function() {
-        test(recipes)
-    })
-    
-    ingredientsList.addEventListener("click", function() {
-        test(recipes)
-    })
-
-    deviceList.addEventListener("click", function() {
-        test(recipes)
-    })
-
-    itemList.addEventListener("click", function() {
-        test(recipes)
-    })
-
-    return recipes
 }
+
+
+/*
+ * Fonctions de tries des recettes
+ */
+
 
 /**
  * Tri complet, avec input et tags
  */
-
-function sortAll(newRecipes) {
+function sortRecipes(newRecipes) {
     let newRecipe = []
-    newRecipe = sortInput(newRecipes)
-    newRecipe = sortIngredients(newRecipe)
-    newRecipe = sortAppliance(newRecipe)
-    newRecipe = sortUstensils(newRecipe)
+
+    newRecipe = sortRecipesByKeywords(newRecipes)
+    newRecipe = sortRecipesByIngredients(newRecipe)
+    newRecipe = sortRecipesByAppliance(newRecipe)
+    newRecipe = sortRecipesByUstensils(newRecipe)
+
     return newRecipe
 }
 
 /**
- * Tri par input
+ * Tri avec input, sur nom, description et ingrédients
  */
-
-function sortInput(recipes) {
+function sortRecipesByKeywords(recipes) {
 
     let inputValue = document.getElementById("inputSearch").value;
 
-    if(inputValue.length >= 3) {
-        let newRecipes = recipes.filter(recipe => {
+    if (inputValue.length >= 3) {
+        return recipes.filter(recipe => {
 
             if (recipe.name.includes(inputValue)) {
                 return true;
@@ -218,13 +328,12 @@ function sortInput(recipes) {
 
             let isValid = false
             recipe.ingredients.forEach((ingredient) => {
-                if(ingredient.ingredient.includes(inputValue)) {
+                if (ingredient.ingredient.includes(inputValue)) {
                     isValid = true;
                 }
             })
             return isValid
         });
-        return newRecipes
     } else {
         return recipes
     }
@@ -233,193 +342,110 @@ function sortInput(recipes) {
 /**
  * Tri par tag ingrédient
  */
+function sortRecipesByIngredients(newRecipes) {
 
-function sortIngredients(newRecipes) {
-
-    if(listOfTagsIngredients.length <= 0) {
+    if (listOfTagsIngredients.length <= 0) {
         return newRecipes
     }
 
-    let newRecipe = newRecipes.filter(recipe => {
+    return newRecipes.filter(recipe => {
         let isValid = false
         listOfTagsIngredients.forEach(tag => {
             recipe.ingredients.forEach(ingredient => {
-                if(ingredient.ingredient.includes(tag)) {
+                if (ingredient.ingredient.includes(tag)) {
                     isValid = true;
                 }
             })
         })
         return isValid
     })
-    return newRecipe
-}
-
-/**
- * Tri par tag Ustensiles
- */
-
-function sortUstensils(newRecipes) {
-
-    if(listOfTagsDevices.length <= 0) {
-        return newRecipes
-    }
-    let newRecipe = newRecipes.filter(recipe => {
-        let isValid = false
-        listOfTagsDevices.forEach(tag => {
-            if(recipe.ustensils.includes(tag)) {
-                isValid = true;
-            }
-        })
-        return isValid
-    })
-    return newRecipe
 }
 
 /**
  * Tri par tag Appareils
  */
+function sortRecipesByAppliance(newRecipes) {
 
-function sortAppliance(newRecipes) {
-
-    if(listOfTagsItems.length <= 0) {
+    if (listOfTagsItems.length <= 0) {
         return newRecipes
     }
-    let newRecipe = newRecipes.filter(recipe => {
+
+    return newRecipes.filter(recipe => {
         let isValid = false
         listOfTagsItems.forEach(tag => {
-            if(recipe.appliance.includes(tag)) {
+            if (recipe.appliance.includes(tag)) {
                 isValid = true;
             }
         })
         return isValid
     })
-    return newRecipe
 }
 
 /**
- * Selection et création des tags Ingrédients
+ * Tri par tag Ustensiles
  */
+function sortRecipesByUstensils(newRecipes) {
 
-function setIngredients(filter) {
-    listIngredients.innerHTML = "";
-
-    filter.forEach((item) => {
-        let p = document.createElement("p")
-        p.onclick = function() {
-            let bal = document.createElement("p")
-            bal.textContent = p.innerHTML
-            bal.classList.add("ingredientTag");
-            tags.append(bal)
-            listOfTagsIngredients.push(p.innerHTML)
-            let tag = createEventListener(bal)
-            bal.append(tag)
-        };
-        p.textContent = item
-        listIngredients.append(p)
-    });
-};
-
-function createEventListener(tag) {
-    let icon = document.createElement('i');
-    icon.classList.add("fa-regular", "fa-circle-xmark","fa-xl", "closeTag");
-    if (icon) {
-        icon.addEventListener('click', function() {
-            tag.style.display = "none";
-            getRecipes();
-            console.log("testSuppression")
-        });
+    if (listOfTagsDevices.length <= 0) {
+        return newRecipes
     }
-    return icon
+
+    return newRecipes.filter(recipe => {
+        let isValid = false
+        listOfTagsDevices.forEach(tag => {
+            if (recipe.ustensils.includes(tag)) {
+                isValid = true;
+            }
+        })
+        return isValid
+    })
 }
 
-function test(recipes) {
-    let newRecipe = sortAll(recipes)
-    displayNewRecipe(newRecipe)
-}
 
-/**
- * Selection et création des tags Appareils
+/*
+ * Fonction d'affichages des recettes dans le DOM
  */
 
-function setDevices(filter) {
-
-    listDevices.innerHTML = "";
-
-    filter.forEach((item) => {
-        let p = document.createElement("p")
-        p.onclick = function() {
-            let bal = document.createElement("p")
-            bal.textContent = p.innerHTML
-            bal.classList.add("deviceTag");
-            tags.append(bal)
-            listOfTagsDevices.push(p.innerHTML)
-            let icon = document.createElement("i")
-            icon.classList.add("fa-regular", "fa-circle-xmark","fa-xl", "closeTag");
-            icon.onclick = function() {
-                bal.style.display = "none"
-            }
-            bal.append(icon)};
-        p.textContent = item
-        listDevices.append(p)
-    });
-};
 
 /**
- * Selection et création des tags Ustensiles
+ * Mise à jour de l'affichage des recettes
  */
-
-function setAppliance(filter) {
-
-    listItems.innerHTML = "";
-
-    filter.forEach((item) => {
-        let p = document.createElement("p")
-        p.onclick = function() {
-            let bal = document.createElement("p")
-            bal.textContent = p.innerHTML
-            bal.classList.add("applianceTag");
-            tags.append(bal)
-            listOfTagsItems.push(p.innerHTML)
-            let icon = document.createElement("i")
-            icon.classList.add("fa-regular", "fa-circle-xmark","fa-xl", "closeTag");
-            icon.onclick = function() {
-                bal.style.display = "none"
-            }
-            bal.append(icon)};
-        p.textContent = item
-        listItems.append(p)
-    });
-};
-
-/**
- * Affichage de toutes les recettes
- */
-    
- async function displayRecipes(recipeItems) {
-    let nodes = document.querySelector('.allCards');
-    
-    recipeItems.forEach((recipe) => {
-        
-        let template = new RecipeCard(recipe)
-        const userCardDOM = template.createRecipe();
-        nodes.append(userCardDOM);
-    });
-};
-
-/**
- * Affichage des recettes fitrées
- */
-
-function displayNewRecipe(recipeItems) {
-    let recipes = document.querySelector(".allCards");
-    recipes.innerHTML = "";
-
+function updateRecipesDisplay(recipeItems) {
+    resetRecipesDisplay()
     displayRecipes(recipeItems);
 }
 
+/**
+ * Réinitialisation de l'affichage des recettes
+ */
+function resetRecipesDisplay() {
+    recipesDOM.innerHTML = "";
+}
+
+/**
+ * Affichage du template de la carte de chaque recette
+ */
+function displayRecipes(recipes) {
+    recipes.forEach((recipe) => {
+        let template = new RecipeCard(recipe)
+        const userCardDOM = template.createRecipe();
+        recipesDOM.append(userCardDOM);
+    });
+}
+
+
+/*
+ * Intialisations
+ */
+
+
+/**
+ * Initialisation du script
+ */
 async function init() {
     const recipes = await getRecipes();
-    displayNewRecipe(recipes);
-};
+    myTagsListInit(recipes)
+    updateRecipesDisplay(recipes);
+}
 
 init();
