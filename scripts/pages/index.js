@@ -242,48 +242,113 @@ function createEventListener(tag, list, type) {
 function tagStyle() {
 
     let closeIngredients = false
-    searchByIngredients.addEventListener("click", function () {
+    openIngredients.addEventListener("click", function () {
         if (closeIngredients === false) {
-            openIngredients.style.transform = "rotate(180deg)"
-            closeIngredients = true
-            listIngredients.style.display = "block"
-            searchByDevices.style.left = "calc(17% + 780px)"
-            searchByItems.style.left = "calc(30% + 780px)"
-        } else if (closeIngredients === true) {
             openIngredients.style.transform = "rotate(0deg)"
+            closeIngredients = true
+            listIngredients.classList.remove('ingredientsListClose')
+            if(closeDevices === true) {
+                closeDevices = false
+                listDevices.classList.remove('deviceListOpen')
+                listDevices.classList.add('deviceListClose')
+                inputDevices.classList.remove('placeholderClick')
+                inputDevices.placeholder = "Appareils"
+                inputDevices.style.width = "120px"
+            }
+            if(closeItems === true) {
+                closeItems = false
+                listItems.classList.remove('itemListOpen')
+                listItems.classList.add('itemListClose')
+                inputItems.classList.remove('placeholderClick')
+                inputItems.placeholder = "Ustensils"
+                inputItems.style.width = "120px"
+            }
+            listIngredients.classList.add('ingredientsListOpen')
+            inputIngredients.classList.add('placeholderClick')
+            inputIngredients.placeholder = "Rechercher un ingrédient"
+            inputIngredients.style.width = "300px"
+        } else if (closeIngredients === true) {
+            openIngredients.style.transform = "rotate(180deg)"
             closeIngredients = false
-            listIngredients.style.display = "none"
-            searchByDevices.style.left = "17%"
-            searchByItems.style.left = "30%"
+            listIngredients.classList.remove('ingredientsListOpen')
+            listIngredients.classList.add('ingredientsListClose')
+            inputIngredients.classList.remove('placeholderClick')
+            inputIngredients.placeholder = "Ingrédients"
+            inputIngredients.style.width = "120px"
         }
     })
 
     let closeDevices = false
-    searchByDevices.addEventListener("click", function () {
+    openDevices.addEventListener("click", function () {
         if (closeDevices === false) {
-            openDevices.style.transform = "rotate(180deg)"
-            listDevices.style.display = "block"
-            closeDevices = true
-            searchByItems.style.left = "calc(30% + 430px)"
-        } else if (closeDevices === true) {
             openDevices.style.transform = "rotate(0deg)"
-            listDevices.style.display = "none"
+            closeDevices = true
+            listDevices.classList.remove('deviceListClose')
+            if(closeIngredients === true) {
+                closeIngredients = false
+                listIngredients.classList.remove('ingredientsListOpen')
+                listIngredients.classList.add('ingredientsListClose')
+                inputIngredients.classList.remove('placeholderClick')
+                inputIngredients.placeholder = "Ingrédients"
+                inputIngredients.style.width = "120px"
+            }
+            if(closeItems === true) {
+                closeItems = false
+                listItems.classList.remove('itemListOpen')
+                listItems.classList.add('itemListClose')
+                inputItems.classList.remove('placeholderClick')
+                inputItems.placeholder = "Ustensils"
+                inputItems.style.width = "120px"
+            }
+            listDevices.classList.add('deviceListOpen')
+            inputDevices.classList.add('placeholderClick')
+            inputDevices.placeholder = "Rechercher un appareil"
+            inputDevices.style.width = "300px"
+        } else if (closeDevices === true) {
+            openDevices.style.transform = "rotate(180deg)"
             closeDevices = false
-            searchByItems.style.left = "30%"
+            listDevices.classList.remove('deviceListOpen')
+            listDevices.classList.add('deviceListClose')
+            inputDevices.classList.remove('placeholderClick')
+            inputDevices.placeholder = "Appareils"
+            inputDevices.style.width = "120px"
         }
     })
 
     let closeItems = false
-    searchByItems.addEventListener("click", function () {
+    openItems.addEventListener("click", function () {
 
         if (closeItems === false) {
-            openItems.style.transform = "rotate(180deg)"
-            listItems.style.display = "block"
-            closeItems = true
-        } else if (closeItems === true) {
             openItems.style.transform = "rotate(0deg)"
-            listItems.style.display = "none"
+            closeItems = true
+            listItems.classList.remove('itemListClose')
+            inputItems.classList.add('placeholderClick')
+            inputItems.placeholder = "Rechercher un ustensil"
+            inputItems.style.width = "300px"
+            if(closeIngredients === true) {
+                closeIngredients = false
+                listIngredients.classList.remove('ingredientsListOpen')
+                listIngredients.classList.add('ingredientsListClose')
+                inputIngredients.classList.remove('placeholderClick')
+                inputIngredients.placeholder = "Ingrédients"
+                inputIngredients.style.width = "120px"
+            }
+            if(closeDevices === true) {
+                closeDevices = false
+                listDevices.classList.remove('deviceListOpen')
+                listDevices.classList.add('deviceListClose')
+                inputDevices.classList.remove('placeholderClick')
+                inputDevices.placeholder = "Appareils"
+                inputDevices.style.width = "120px"
+            }
+        } else if (closeItems === true) {
+            openItems.style.transform = "rotate(180deg)"
+            listItems.classList.remove('itemListOpen')
+            listItems.classList.add('itemListClose')
             closeItems = false
+            inputItems.classList.remove('placeholderClick')
+            inputItems.placeholder = "Ustensils"
+            inputItems.style.width = "120px"
         }
     })
 }

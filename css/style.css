@@ -281,12 +281,10 @@ p {
 .searchWithTags__devices {
   background-color: #68D9A4;
   border: #68D9A4 25px solid;
-  left: 17%;
 }
 .searchWithTags__items {
   background-color: #ED6454;
   border: #ED6454 25px solid;
-  left: 30%;
 }
 .searchWithTags__list {
   color: white;
@@ -294,7 +292,6 @@ p {
   -moz-columns: 3;
   columns: 3;
   max-height: 500px;
-  height: max-content;
   padding-top: 2em;
 }
 .searchWithTags__list p {
@@ -332,7 +329,6 @@ p {
   width: fit-content;
   margin-right: 25px;
   border-radius: 5px;
-  position: absolute;
 }
 .searchWithTags__button {
   border: none;
@@ -341,6 +337,7 @@ p {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+  transform: rotate(180deg);
 }
 .searchWithTags__button--ingredients {
   background-color: #3282F7;
@@ -351,18 +348,34 @@ p {
 .searchWithTags__button--items {
   background-color: #ED6454;
 }
+.searchWithTags__header {
+  display: flex;
+  justify-content: space-between;
+}
 
-#ingredientsList {
+.ingredientsListClose {
   display: none;
+}
+
+.ingredientsListOpen {
+  display: block;
   overflow-x: scroll;
 }
 
-#deviceList {
+.deviceListClose {
   display: none;
 }
 
-#itemList {
+.deviceListOpen {
+  display: block;
+}
+
+.itemListClose {
   display: none;
+}
+
+.itemListOpen {
+  display: block;
 }
 
 #tags {
@@ -398,6 +411,10 @@ p {
   color: white;
   border-radius: 5px;
   margin-right: 2em;
+}
+
+.placeholderClick::placeholder {
+  opacity: 0.5;
 }
 
 .header {

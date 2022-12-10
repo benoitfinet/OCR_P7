@@ -2,27 +2,28 @@
     display: flex;
     flex-direction: row;
     padding-top: 25px;
+
     &__ingredients {
         background-color: #3282F7;
         border: #3282F7 25px solid;
     }
+
     &__devices {
         background-color: #68D9A4;
         border: #68D9A4 25px solid;
-        left: 17%;
     }
+
     &__items {
         background-color: #ED6454;
         border: #ED6454 25px solid;
-        left: 30%;
     }
+
     &__list {
         color: white;
         -webkit-columns: 3;
         -moz-columns: 3;
         columns: 3;
         max-height: 500px;
-        height: max-content;
         padding-top: 2em;
     }
 
@@ -36,35 +37,39 @@
         padding-top: 5px;
     }
 
-    &__input{
+    &__input {
         width: 120px;
+
         &::placeholder {
             color: white;
             font-weight: 700;
             font-size: 18px;
         }
+
         &:focus {
             outline: none;
         }
+
         &--ingredients[type="text"] {
-            background-color : #3282F7;
+            background-color: #3282F7;
             border: none;
         }
+
         &--devices[type="text"] {
-            background-color : #68D9A4;
+            background-color: #68D9A4;
             border: none;
         }
+
         &--items[type="text"] {
-            background-color : #ED6454;
+            background-color: #ED6454;
             border: none;
         }
     }
 
-    &__wrap{
+    &__wrap {
         width: fit-content;
         margin-right: 25px;
         border-radius: 5px;
-        position: absolute;
     }
 
     &__button {
@@ -74,29 +79,50 @@
         text-decoration: none;
         display: inline-block;
         font-size: 16px;
+        transform: rotate(180deg);
+
         &--ingredients {
             background-color: #3282F7;
         }
+
         &--devices {
-            background-color : #68D9A4;
+            background-color: #68D9A4;
         }
+
         &--items {
-            background-color : #ED6454;
+            background-color: #ED6454;
         }
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
     }
 }
 
-#ingredientsList {
+.ingredientsListClose {
     display: none;
+}
+
+.ingredientsListOpen {
+    display: block;
     overflow-x: scroll;
 }
 
-#deviceList {
+.deviceListClose {
     display: none;
 }
 
-#itemList {
+.deviceListOpen {
+    display: block;
+}
+
+.itemListClose {
     display: none;
+}
+
+.itemListOpen {
+    display: block;
 }
 
 #tags {
@@ -107,7 +133,7 @@
 }
 
 .deviceTag {
-    background-color : #68D9A4;
+    background-color: #68D9A4;
     padding: 1em 2em;
     color: white;
     border-radius: 5px;
@@ -119,7 +145,7 @@
 }
 
 .applianceTag {
-    background-color : #ED6454;
+    background-color: #ED6454;
     padding: 1em 2em;
     color: white;
     border-radius: 5px;
@@ -127,9 +153,13 @@
 }
 
 .ingredientTag {
-    background-color : #3282F7;
+    background-color: #3282F7;
     padding: 1em 2em;
     color: white;
     border-radius: 5px;
     margin-right: 2em;
+}
+
+.placeholderClick::placeholder {
+    opacity: 0.5;
 }
