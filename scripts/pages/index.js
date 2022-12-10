@@ -150,7 +150,7 @@ function setIngredientsTagsList(filter) {
             bal.classList.add("ingredientTag");
             tags.append(bal)
             listOfTagsIngredients.push(p.innerHTML)
-            let tag = createEventListener(bal, listOfTagsIngredients, 'listOfTagsIngredients')
+            let tag = createEventListener(bal, 'listOfTagsIngredients')
             bal.append(tag)
         };
         p.textContent = item
@@ -173,7 +173,7 @@ function setDevicesTagsList(filter) {
             bal.classList.add("deviceTag");
             tags.append(bal)
             listOfTagsDevices.push(p.innerHTML)
-            let tag = createEventListener(bal, listOfTagsDevices, 'listOfTagsDevices')
+            let tag = createEventListener(bal, 'listOfTagsDevices')
             bal.append(tag)
         };
         p.textContent = item
@@ -196,7 +196,7 @@ function setApplianceTagsList(filter) {
             bal.classList.add("applianceTag");
             tags.append(bal)
             listOfTagsItems.push(p.innerHTML)
-            let tag = createEventListener(bal, listOfTagsItems, 'listOfTagsItems')
+            let tag = createEventListener(bal, 'listOfTagsItems')
             bal.append(tag)
         };
         p.textContent = item
@@ -207,10 +207,10 @@ function setApplianceTagsList(filter) {
 /**
  * event pour l'ajout de la croix et effacer le tag (sans l'event pour reload les recettes)
  */
-function createEventListener(tag, list, type) {
+function createEventListener(tag, type) {
     let icon = document.createElement('i');
     icon.classList.add("fa-regular", "fa-circle-xmark", "fa-xl", "closeTag");
-    icon.setAttribute('id', "tagNumber" + list.length)
+    
 
     if (icon) {
         icon.addEventListener('click', async function () {
@@ -218,19 +218,23 @@ function createEventListener(tag, list, type) {
 
             switch(type){
                 case 'listOfTagsIngredients':
-                    listOfTagsIngredients = list.filter(test => test !== tag.textContent)
+                    icon.setAttribute('id', "tagNumber" + listOfTagsIngredients.length)
+                    listOfTagsIngredients = listOfTagsIngredients.filter(test => test !== tag.textContent)
                     break;
                 case 'listOfTagsDevices':
-                    listOfTagsDevices = list.filter(test => test !== tag.textContent)
+                    icon.setAttribute('id', "tagNumber" + listOfTagsDevices.length)
+                    listOfTagsDevices = listOfTagsDevices.filter(test => test !== tag.textContent)
                     break;
                 case 'listOfTagsItems':
-                    listOfTagsItems = list.filter(test => test !== tag.textContent)
+                    icon.setAttribute('id', "tagNumber" + listOfTagsItems.length)
+                    listOfTagsItems = listOfTagsItems.filter(test => test !== tag.textContent)
                     break;
             }
 
             const recipes = await getRecipes()
             let sortedRecipes = sortRecipes(recipes)
             updateRecipesDisplay(sortedRecipes)
+            myTagsListInit(sortedRecipes)
         });
     }
     return icon
@@ -369,6 +373,8 @@ function sortRecipes(newRecipes) {
     newRecipe = sortRecipesByIngredients(newRecipe)
     newRecipe = sortRecipesByAppliance(newRecipe)
     newRecipe = sortRecipesByUstensils(newRecipe)
+
+    console.log(`nombre de recettes : ${newRecipe.length}`)
 
     return newRecipe
 }
