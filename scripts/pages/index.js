@@ -11,10 +11,6 @@ let listOfTagsIngredients = [];
 let listOfTagsDevices = [];
 let listOfTagsItems = [];
 
-// let ingredients = [];
-// let appliance = [];
-// let ustensils = [];
-
 
 /**
  *
@@ -31,16 +27,6 @@ async function getRecipes() {
             response.recipes.map(item => {
                 let recipe = new RecipesFactory(item, 'json')
                 results.push(recipe)
-
-                // appliance.push(recipe.appliance)
-                //
-                // recipe.ingredients.forEach((item) => {
-                //     ingredients.push(item.ingredient)
-                // })
-                //
-                // recipe.ustensils.forEach((item2) => {
-                //     ustensils.push(item2)
-                // })
             })
 
             return results
